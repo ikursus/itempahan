@@ -51,7 +51,7 @@
               </div>
             </div>
           </div>
-          <div class="h1 mb-3">75%</div>
+          <div class="h1 mb-3">{{ auth()->user()->notifications->count() }}</div>
           <div class="d-flex mb-2">
             <div>Conversion rate</div>
             <div class="ms-auto">

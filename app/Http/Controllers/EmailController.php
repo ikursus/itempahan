@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Mail\EmailUmum;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use App\Notifications\UserEmailNotification;
 
 class EmailController extends Controller
 {
@@ -35,8 +36,12 @@ class EmailController extends Controller
         // Menghantar email ke semua users yang dipilih
         foreach ($users as $user)
         {
+            // Hantar email
             Mail::to($user->email)
             ->send(new EmailUmum($tajukEmail, $kandunganEmail));
+
+            // Hantar notification
+            $user->notify(new UserEmailNotification($tajukEmail, $kandunganEmail));
         }
 
         // Tamat kira masa untuk proses semua email
