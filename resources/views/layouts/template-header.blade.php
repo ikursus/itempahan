@@ -133,7 +133,7 @@
           <a href="#" class="dropdown-item">Feedback</a>
           <div class="dropdown-divider"></div>
           <a href="{{ asset('themes/tabler') }}/settings.html" class="dropdown-item">Settings</a>
-          <a href="{{ asset('themes/tabler') }}/sign-in.html" class="dropdown-item">Logout</a>
+          <a href="{{ route('logout') }}" class="dropdown-item">Logout</a>
         </div>
       </div>
     </div>

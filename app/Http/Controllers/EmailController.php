@@ -29,13 +29,23 @@ class EmailController extends Controller
         // Dapatkan senarai users yang akan menerima emails
         $users = User::all();
 
+        // Mula kira masa untuk proses semua email
+        $startTime = microtime(true);
+
         // Menghantar email ke semua users yang dipilih
         foreach ($users as $user)
         {
-            Mail::to($user->email)->send(new EmailUmum($tajukEmail, $kandunganEmail));
+            Mail::to($user->email)
+            ->send(new EmailUmum($tajukEmail, $kandunganEmail));
         }
 
+        // Tamat kira masa untuk proses semua email
+        $endTime = microtime(true);
+
+        // Hitung masa proses semua email
+        $elapsedTime = $endTime - $startTime;
+
         // Return status
-        return 'Email sukses dihantar';
+        return 'Email sukses dihantar dengan tempoh (saat): ' . $elapsedTime;
     }
 }

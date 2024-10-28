@@ -28,14 +28,21 @@ Route::get('/register', [RegisterController::class, 'paparBorangDaftar']);
 Route::post('/register', );
 
 
-// Route dashboard pelanggan
-Route::get('/dashboard', DashboardController::class)->name('dashboard.pelanggan');
+// Route group middleware auth
+Route::group(['middleware' => 'auth'], function () {
 
+    // Route dashboard pelanggan
+    Route::get('/dashboard', DashboardController::class)->name('dashboard.pelanggan');
 
-// Routing untuk paparkan borang  email
-Route::get('hantar-email', [EmailController::class, 'paparBorangEmail'])
-->name('borang.email');
+    // Routing untuk paparkan borang  email
+    Route::get('hantar-email', [EmailController::class, 'paparBorangEmail'])
+    ->name('borang.email');
 
-// Routing untuk terima data email dan hantar email
-Route::post('hantar-email', [EmailController::class, 'hantarEmail'])
-->name('hantar.email');
+    // Routing untuk terima data email dan hantar email
+    Route::post('hantar-email', [EmailController::class, 'hantarEmail'])
+    ->name('hantar.email');
+
+    // Route logout
+    Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+
+});
