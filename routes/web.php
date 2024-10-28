@@ -1,9 +1,11 @@
 <?php
 
 use App\Models\User;
+use PharIo\Manifest\Email;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -26,5 +28,14 @@ Route::get('/register', [RegisterController::class, 'paparBorangDaftar']);
 Route::post('/register', );
 
 
-// Route dashboard pelangga
+// Route dashboard pelanggan
 Route::get('/dashboard', DashboardController::class)->name('dashboard.pelanggan');
+
+
+// Routing untuk paparkan borang  email
+Route::get('hantar-email', [EmailController::class, 'paparBorangEmail'])
+->name('borang.email');
+
+// Routing untuk terima data email dan hantar email
+Route::post('hantar-email', [EmailController::class, 'hantarEmail'])
+->name('hantar.email');
