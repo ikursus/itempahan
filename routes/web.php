@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Auth\Events\Login;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
