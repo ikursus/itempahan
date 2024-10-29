@@ -31,6 +31,10 @@ Route::post('/register', );
 // Route group middleware auth
 Route::group(['middleware' => 'auth'], function () {
 
+    // Route untuk tandakan notification telah di baca (mark as read)
+    Route::get('/notifications/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])
+    ->name('notifications.markAsRead');
+
     // Route dashboard pelanggan
     Route::get('/dashboard', DashboardController::class)->name('dashboard.pelanggan');
 
