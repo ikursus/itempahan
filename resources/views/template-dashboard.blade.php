@@ -131,7 +131,7 @@
       <div class="card">
         <div class="card-body">
           <div class="d-flex align-items-center">
-            <div class="subheader">Active users</div>
+            <div class="subheader">Total users</div>
             <div class="ms-auto lh-1">
               <div class="dropdown">
                 <a class="dropdown-toggle text-secondary" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Last 7 days</a>
@@ -144,7 +144,7 @@
             </div>
           </div>
           <div class="d-flex align-items-baseline">
-            <div class="h1 mb-3 me-2">2,986</div>
+            <div class="h1 mb-3 me-2">{{ $totalUsers ?? '0' }}</div>
             <div class="me-auto">
               <span class="text-green d-inline-flex align-items-center lh-1">
                 4% <!-- Download SVG icon from http://tabler-icons.io/i/trending-up -->

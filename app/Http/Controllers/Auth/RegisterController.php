@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Events\PendaftaranPengguna;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PendaftaranUserRequest;
 
 class RegisterController extends Controller
 {
@@ -14,14 +15,10 @@ class RegisterController extends Controller
         return view('auth.template-daftar');
     }
 
-    public function store(Request $request)
+    public function store(PendaftaranUserRequest $request)
     {
         // Validasi data pendaftaran
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'unique:users,email'],
-            'password' => ['required', 'min:3', 'confirmed'],
-        ]);
+        $data = $request->validated();
 
         // Daftarkan user baru
         $user = User::create($data);
@@ -31,7 +28,5 @@ class RegisterController extends Controller
 
         // Redirect ke halaman login
         return redirect()->route('login');
-
-
     }
 }
