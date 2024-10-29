@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Events\PendaftaranPengguna;
+use App\Http\Controllers\Controller;
 
 class RegisterController extends Controller
 {
@@ -15,10 +17,21 @@ class RegisterController extends Controller
     public function store(Request $request)
     {
         // Validasi data pendaftaran
-        $request->validate([
+        $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'unique:users,email'],
             'password' => ['required', 'min:3', 'confirmed'],
         ]);
+
+        // Daftarkan user baru
+        $user = User::create($data);
+
+        // Panggil event PendaftaranPengguna
+        event(new PendaftaranPengguna($user));
+
+        // Redirect ke halaman login
+        return redirect()->route('login');
+
+
     }
 }
