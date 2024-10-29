@@ -2,9 +2,11 @@
 
 @section('isi-kandungan-utama')
 
+@include('layouts.template-alerts')
+
 <h2 class="card-title text-center mb-4">Create new account</h2>
 
-<form action="{{ route('login.authenticate') }}" method="post" autocomplete="off" novalidate>
+<form action="{{ route('register.store') }}" method="post" autocomplete="off" novalidate>
     @csrf
     <div class="mb-3">
         <label class="form-label">Name</label>

@@ -12,8 +12,13 @@ class RegisterController extends Controller
         return view('auth.template-daftar');
     }
 
-    public function register(Request $request)
+    public function store(Request $request)
     {
-
+        // Validasi data pendaftaran
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'unique:users,email'],
+            'password' => ['required', 'min:3', 'confirmed'],
+        ]);
     }
 }

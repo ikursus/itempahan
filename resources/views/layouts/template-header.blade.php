@@ -46,12 +46,12 @@
                 <h3 class="card-title">Last updates</h3>
               </div>
               <div class="list-group list-group-flush list-group-hoverable">
-                @foreach (auth()->user()->unreadNotifications as $notification)
+                @foreach (auth()->user()->unreadNotifications()->latest()->limit(5)->get() as $notification)
                 <div class="list-group-item">
                   <div class="row align-items-center">
                     <div class="col-auto"><span class="status-dot status-dot-animated bg-red d-block"></span></div>
                     <div class="col text-truncate">
-                      <a href="#" class="text-body d-block">Anda ada email bertajuk {{ $notification->data['tajuk_email'] }}</a>
+                      <a href="{{ route('notifications.markAsRead', $notification->id) }}" class="text-body d-block">Anda ada email bertajuk {{ $notification->data['tajuk_email'] }}</a>
                       <div class="d-block text-secondary text-truncate mt-n1">
 
                       </div>

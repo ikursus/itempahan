@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Auth\RegisterController;
 
 Route::get('/', function () {
@@ -24,8 +25,8 @@ Route::post('/login', [LoginController::class, 'authenticate'])->name('login.aut
 
 // Paparkan borang pendaftaran akaun pelanggan
 Route::get('/register', [RegisterController::class, 'paparBorangDaftar']);
-// Ambil data daripada borang login
-Route::post('/register', );
+// Ambil data daripada borang pendaftaran
+Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
 
 // Route group middleware auth
