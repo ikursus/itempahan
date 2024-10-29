@@ -17,13 +17,22 @@ class TempahanSeeder extends Seeder
     {
         $senaraiKategori = Kategori::all();
         $senaraiTempahan = Tempahan::factory(300)->create();
-        $senaraiTempahanItems = TempahanItem::factory(5000)->create();
+
+        // Chunk rekod data
+        $totalData = 5000;
+        $batchSize = 500;
+
+        for($i = 0; $i < $totalData; $i += $batchSize) {
+
+            $senaraiTempahanItems = TempahanItem::factory($batchSize)->create();
+
+            sleep(2);
+        }
 
         foreach ($senaraiTempahanItems as $item) {
             $item->kategori_id = $senaraiKategori->random()->id;
             $item->tempahan_id = $senaraiTempahan->random()->id;
             $item->save();
         }
-
     }
 }
