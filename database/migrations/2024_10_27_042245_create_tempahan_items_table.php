@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('tempahan_items', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('tempahan_id');
+            $table->unsignedBigInteger('tempahan_id')->nullable();
             $table->unsignedBigInteger('kategori_id')->nullable();
             $table->timestamps();
 
             // Foreign key constraint
-            $table->foreign('tempahan_id')->references('id')->on('tempahans')->onDelete('cascade');
+            $table->foreign('tempahan_id')->references('id')->on('tempahans')->nullOnDelete();
             $table->foreign('kategori_id')->references('id')->on('kategoris')->nullOnDelete();
         });
     }
