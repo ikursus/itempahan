@@ -62,10 +62,11 @@ class FileManagerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(FileManager $fileManager)
+    public function show($id)
     {
+        $fileManager = FileManager::findByHashid($id);
         // Muat Turun Fail upload
-        return response()->download( base_path($fileManager->lokasi_fail) );
+        return response()->download( public_path($fileManager->lokasi_fail) );
     }
 
     /**

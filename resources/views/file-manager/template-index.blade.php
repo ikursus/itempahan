@@ -85,7 +85,7 @@
                                 @endif
                             </td>
                             <td class="text-end">
-                                <a href="{{ route('file-manager.show', $file->id) }}" class="btn btn-sm btn-primary">Download</a>
+                                <a href="{{ route('file-manager.show', $file->hash_id) }}" class="btn btn-sm btn-primary">Download</a>
                             </td>
                         </tr>
                         @endforeach
