@@ -42,12 +42,14 @@ class FileManagerController extends Controller
             foreach ($request->file('fail_upload') as $file)
             {
                 $file_name = $file->getClientOriginalName();
+                // $file_ext = $file->getClientOriginalExtension();
                 $file->move(public_path('files'), $file_name);
 
                 // Simpan ke dalam table file_managers
                 FileManager::create([
                     'nama_fail_asal' => $file_name,
-                    'lokasi_fail' => 'public/files/' . $file_name
+                    //'extensi_fail' => $file->getClientOriginalExtension(),
+                    'lokasi_fail' => 'files/' . $file_name
                 ]);
             }
         }
@@ -63,7 +65,7 @@ class FileManagerController extends Controller
     public function show(FileManager $fileManager)
     {
         // Muat Turun Fail upload
-        return response()->download(base_path($fileManager->lokasi_fail));
+        return response()->download( base_path($fileManager->lokasi_fail) );
     }
 
     /**

@@ -54,6 +54,7 @@
                         </th>
                         <th>Nama Asal Fail</th>
                         <th>Lokasi Fail</th>
+                        <th>Preview Fail</th>
                         <th>Tindakan</th>
                         </tr>
                     </thead>
@@ -63,8 +64,26 @@
                         <tr>
                             <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"></td>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $file->nama_asal_fail }}</td>
+                            <td>{{ $file->nama_fail_asal }}</td>
                             <td>{{ $file->lokasi_fail }}</td>
+                            <td>
+                                {{--
+                                Kaedah ini boleh digunakan tetapi kurang sesuai
+                                kerana blade perlu memproses dan membaca extension file.
+                                Sebaiknya simpan rekod jenis extension fail sewaktu rekod
+                                disimpan di dalam database
+                                 --}}
+                                @php
+                                    $fileExt = pathinfo($file->lokasi_fail, PATHINFO_EXTENSION);
+                                    $extensionImage = ['jpg', 'jpeg', 'png', 'gif'];
+                                @endphp
+
+                                @if (in_array($fileExt, $extensionImage))
+                                    <img src="{{ asset($file->lokasi_fail) }}" class="img-fluid rounded" alt="Preview" width="100" height="100" />
+                                @else
+                                    Tiada Preview
+                                @endif
+                            </td>
                             <td class="text-end">
                                 <a href="{{ route('file-manager.show', $file->id) }}" class="btn btn-sm btn-primary">Download</a>
                             </td>
