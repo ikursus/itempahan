@@ -36,12 +36,11 @@ class UserTempahanImport implements ToCollection, WithHeadingRow
                     return Str::startsWith($key, 'tempahan_');
                 });
 
-                // Proses jumlah tempahan yang dimiliki oleh user
-                // yang sedang diimport
-                // Kita cari dan kumpulkan semua yang sama iaitu tempahan_X
+                // Proses jumlah tempahan yang dimiliki oleh user yang sedang diimport
+                // Kita cari dan kumpulkan semua data yang dalam set sama iaitu tempahan_X
                 // dimana X adalah nombor yang disebutkan contohnya 1,2,3 menerusi array_chunk
                 // Berdasarkan jumlah data yang ada dalam X, kita simpan rekod tempahan
-                // berdasarkan data yang perlu disimpan ke column yang terlibat.
+                // berdasarkan jumlah data yang perlu disimpan ke column yang terlibat.
                 // Dalam kes dibawah, kita hanya ada 1 data daripada array iaitu tarikh_tempahan
                 // untuk disimpan ke dalam table tempahan. Jadi array_chunk kita tetapkan seperti
                 // array_chunk($senaraiTempahan->all(), 1)
