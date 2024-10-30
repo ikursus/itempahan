@@ -31,6 +31,10 @@ Route::post('/register', [RegisterController::class, 'store'])->name('register.s
 // Route group middleware auth
 Route::group(['middleware' => 'auth'], function () {
 
+    Route::get('generate-token', function () {
+        return auth()->user()->createToken('sample-nama')->plainTextToken;
+    });
+
     // Route untuk tandakan notification telah di baca (mark as read)
     Route::get('/notifications/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
 
@@ -44,7 +48,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/hantar-email', [EmailController::class, 'hantarEmail'])->name('hantar.email');
 
     // Route untuk resource CRUD kategori
-    Route::resource('/kategori', KategoriController::class);
+    // Route::resource('/kategori', KategoriController::class)->except(['show']);
+    // Route::get('/kategori/carian', [KategoriController::class, 'carian'])->name('kategori.carian');
+    Route::resource('/kategori', KategoriController::class)->only(['index', 'create', 'store']);
 
     // Route untuk resource CRUD fail
     Route::resource('/file-manager', FileManagerController::class);
