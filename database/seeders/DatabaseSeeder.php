@@ -16,10 +16,11 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             KategoriSeeder::class,
-            TempahanSeeder::class
+            TempahanSeeder::class,
+            EventSeeder::class
         ]);
 
-        User::factory(10000)->create();
+        User::factory(10)->create();
 
 
         // User::factory()->create([
