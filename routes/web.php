@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
@@ -53,6 +54,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/events', [EventController::class, 'store']);
     Route::put('/events/{event}', [EventController::class, 'update']);
     Route::delete('/events/{event}', [EventController::class, 'destroy']);
+
+    Route::post('/import/users', [ImportController::class, 'importUsers'])->name('import.users');
 
     // Route logout
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
