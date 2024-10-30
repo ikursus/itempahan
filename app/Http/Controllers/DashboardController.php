@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Kategori;
+use App\Models\Tempahan;
+use App\Models\TempahanItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
@@ -19,6 +22,18 @@ class DashboardController extends Controller
             return User::count();
         });
 
-        return view('template-dashboard', compact('totalUsers'));
+        $totalKategori = Cache::remember('cache-total-kategori', 3600, function () {
+            return Kategori::count();
+        });
+
+        $totalTempahan = Cache::remember('cache-total-tempahan', 3600, function () {
+            return Tempahan::count();
+        });
+
+        $totalItem = Cache::remember('cache-total-item', 3600, function () {
+            return TempahanItem::count();
+        });
+
+        return view('template-dashboard', compact('totalUsers', 'totalKategori', 'totalTempahan', 'totalItem'));
     }
 }

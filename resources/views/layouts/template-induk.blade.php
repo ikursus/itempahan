@@ -19,6 +19,7 @@
     <link href="{{ asset('themes/tabler') }}/dist/css/tabler-payments.min.css?1692870487" rel="stylesheet"/>
     <link href="{{ asset('themes/tabler') }}/dist/css/tabler-vendors.min.css?1692870487" rel="stylesheet"/>
     <link href="{{ asset('themes/tabler') }}/dist/css/demo.min.css?1692870487" rel="stylesheet"/>
+    @stack('custom-css')
     <style>
       @import url('https://rsms.me/inter/inter.css');
       :root {
@@ -153,6 +154,7 @@
       </div>
     </div>
     <!-- Libs JS -->
+    @stack('custom-script')
     <script src="{{ asset('themes/tabler') }}/dist/libs/apexcharts/dist/apexcharts.min.js?1692870487" defer></script>
     <script src="{{ asset('themes/tabler') }}/dist/libs/jsvectormap/dist/js/jsvectormap.min.js?1692870487" defer></script>
     <script src="{{ asset('themes/tabler') }}/dist/libs/jsvectormap/dist/maps/world.js?1692870487" defer></script>
@@ -160,6 +162,7 @@
     <!-- Tabler Core -->
     <script src="{{ asset('themes/tabler') }}/dist/js/tabler.min.js?1692870487" defer></script>
     <script src="{{ asset('themes/tabler') }}/dist/js/demo.min.js?1692870487" defer></script>
+
     <script>
       // @formatter:off
       document.addEventListener("DOMContentLoaded", function () {

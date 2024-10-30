@@ -12,7 +12,10 @@ class KategoriController extends Controller
      */
     public function index()
     {
-        //
+        // Dapatkan senarai kategori bersama dengan sub kategori
+        $senaraiKategori = Kategori::whereNull('parent_id')->with('childRecursive')->get();
+
+        return view('kategori.template-index', compact('senaraiKategori'));
     }
 
     /**

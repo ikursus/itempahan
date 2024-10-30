@@ -3,11 +3,13 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Mail\Mailables\Attachment;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class EmailUmum extends Mailable implements ShouldQueue
 {
@@ -15,14 +17,16 @@ class EmailUmum extends Mailable implements ShouldQueue
 
     public $tajukEmail;
     public $kandunganEmail;
+    public $attachmentPaths;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($tajukEmail, $kandunganEmail)
+    public function __construct($tajukEmail, $kandunganEmail, $attachmentPaths)
     {
         $this->tajukEmail = $tajukEmail;
         $this->kandunganEmail = $kandunganEmail;
+        $this->attachmentPaths = $attachmentPaths;
     }
 
     /**
@@ -52,6 +56,12 @@ class EmailUmum extends Mailable implements ShouldQueue
      */
     public function attachments(): array
     {
-        return [];
+        $attachments = [];
+
+        foreach ($this->attachmentPaths as $path) {
+            $attachments[] = Attachment::fromPath(Storage::path($path));
+        }
+
+        return $attachments;
     }
 }

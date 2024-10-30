@@ -26,7 +26,7 @@
             </div>
 
 
-            <form action="{{ route('hantar.email') }}" method="POST">
+            <form action="{{ route('hantar.email') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body border-bottom py-3">
 
@@ -38,6 +38,11 @@
                     <div class="mb-3 row">
                         <label class="required">Kandungan Email</label>
                         <textarea class="form-control" name="kandungan_email" required></textarea>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label class="required">Attachments</label>
+                        <input type="file" class="form-control" name="attachments[]" multiple>
                     </div>
 
                 </div>

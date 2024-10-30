@@ -1,14 +1,13 @@
 <?php
 
-use App\Models\User;
-use PharIo\Manifest\Email;
-use Illuminate\Auth\Events\Login;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\EmailController;
+use App\Http\Controllers\EventController;
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\FileManagerController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Auth\RegisterController;
 
@@ -32,19 +31,28 @@ Route::post('/register', [RegisterController::class, 'store'])->name('register.s
 Route::group(['middleware' => 'auth'], function () {
 
     // Route untuk tandakan notification telah di baca (mark as read)
-    Route::get('/notifications/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])
-    ->name('notifications.markAsRead');
+    Route::get('/notifications/mark-as-read/{id}', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
 
     // Route dashboard pelanggan
     Route::get('/dashboard', DashboardController::class)->name('dashboard.pelanggan');
 
     // Routing untuk paparkan borang  email
-    Route::get('hantar-email', [EmailController::class, 'paparBorangEmail'])
-    ->name('borang.email');
+    Route::get('/hantar-email', [EmailController::class, 'paparBorangEmail'])->name('borang.email');
 
     // Routing untuk terima data email dan hantar email
-    Route::post('hantar-email', [EmailController::class, 'hantarEmail'])
-    ->name('hantar.email');
+    Route::post('/hantar-email', [EmailController::class, 'hantarEmail'])->name('hantar.email');
+
+    // Route untuk resource CRUD kategori
+    Route::resource('/kategori', KategoriController::class);
+
+    // Route untuk resource CRUD fail
+    Route::resource('/file-manager', FileManagerController::class);
+
+    Route::get('/calendar', [EventController::class, 'index'])->name('calendar.index');
+    Route::get('/events', [EventController::class, 'getEvents'])->name('events.get');
+    Route::post('/events', [EventController::class, 'store']);
+    Route::put('/events/{event}', [EventController::class, 'update']);
+    Route::delete('/events/{event}', [EventController::class, 'destroy']);
 
     // Route logout
     Route::get('/logout', [LoginController::class, 'logout'])->name('logout');

@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Mail\EmailUmum;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 use App\Notifications\UserEmailNotification;
 
 class EmailController extends Controller
@@ -21,11 +22,21 @@ class EmailController extends Controller
         $request->validate([
             'tajuk_email' => 'required|min:3',
             'kandungan_email' => ['required', 'min:3'],
+            'attachments.*' => 'nullable|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,jpeg,jpg,png,gif|max:2048',
         ]);
 
         // Dapatkan data yang diperlukan oleh EmailUmum
         $tajukEmail = $request->input('tajuk_email');
         $kandunganEmail = $request->input('kandungan_email');
+
+        // Get all attachments
+        $attachmentPaths = [];
+        if ($request->hasFile('attachments')) {
+            foreach ($request->file('attachments') as $file) {
+                $path = $file->store('email-attachments');
+                $attachmentPaths[] = $path;
+            }
+        }
 
         // Dapatkan senarai users yang akan menerima emails
         $users = User::all();
@@ -38,7 +49,7 @@ class EmailController extends Controller
         {
             // Hantar email
             Mail::to($user->email)
-            ->send(new EmailUmum($tajukEmail, $kandunganEmail));
+            ->send(new EmailUmum($tajukEmail, $kandunganEmail, $attachmentPaths));
 
             // Hantar notification
             $user->notify(new UserEmailNotification($tajukEmail, $kandunganEmail));
