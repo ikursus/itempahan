@@ -19,7 +19,7 @@ class ImportController extends Controller
         }
 
         catch (\Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage());
+            return $e->getMessage();
         }
 
         return redirect()->back()->with('success', 'Import success');

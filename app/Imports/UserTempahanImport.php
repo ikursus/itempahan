@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Tempahan;
 use Illuminate\Support\Str;
@@ -28,20 +29,22 @@ class UserTempahanImport implements ToCollection, WithHeadingRow
                     'password' => $row['password'],
                 ]);
 
-                // Dapatkan column tempahan secara dinamik
-                // $tempahanColumns = collect($row)->filter(function ($value, $key) {
-                //     return Str::startsWith($key, 'tarikh_');
-                // })->chunk(3); // Group 3 column
+                // Dapatkan relation tempahan daripada row user dimana
+                // key bermula dengan tempahan_
+                $senaraiTempahan = collect($row)->filter(function ($value, $key) {
+                    return Str::startsWith($key, 'tempahan_');
+                });
 
-                // foreach ($tempahanColumns as $tempahanColumn) {
-                //     Tempahan::create([
-                //         'pelanggan_id' => $user->id,
-                //         'tarikh_tempahan' => $tempahanColumn[0],
-                //     ]);
-                // }
-
+                // Simpan Rekod Tempahan
+                foreach (array_chunk($senaraiTempahan->all(), 1) as $tempahan) {
+                    if (!empty($tempahan[0])) {
+                        Tempahan::create([
+                            'pelanggan_id' => $user->id,
+                            'tarikh_tempahan' => Carbon::createFromFormat('d/m/Y', $tempahan[0])->format('Y-m-d'),
+                        ]);
+                    }
+                }
             }
-
         });
     }
 }
