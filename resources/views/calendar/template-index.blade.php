@@ -56,7 +56,7 @@
                 all_day: document.getElementById('allDay').checked
             };
 
-            const url = eventId ? `/events/${eventId}` : '/events';
+            const url = eventId ? '/events/${eventId}' : '/events';
             const method = eventId ? 'PUT' : 'POST';
 
             fetch(url, {
@@ -80,7 +80,7 @@
             if (!eventId) return;
 
             if (confirm('Are you sure you want to delete this event?')) {
-                fetch(`/events/${eventId}`, {
+                fetch('/events/${eventId}', {
                     method: 'DELETE',
                     headers: {
                         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
@@ -101,52 +101,63 @@
 
 @section('section-page-body')
 <div class="container mt-5">
+
+    @include('layouts.template-alerts')
+
+    <div class="row mb-5">
+        <div class="col-12">
+            <a href="#" data-bs-toggle="modal" data-bs-target="#eventModal" class="btn btn-primary">Tambah Event</a>
+        </div>
+    </div>
+
     <div id='calendar'></div>
 </div>
 
 <!-- Modal for adding/editing events -->
 <div class="modal fade" id="eventModal" tabindex="-1">
     <div class="modal-dialog">
+        <form method="POST" action="{{ route('events.store') }}">
+            @csrf
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Event Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <form id="eventForm">
                     <input type="hidden" id="eventId">
                     <div class="mb-3">
                         <label class="form-label">Title</label>
-                        <input type="text" class="form-control" id="eventTitle" required>
+                        <input type="text" class="form-control" id="eventTitle" name="title" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Description</label>
-                        <textarea class="form-control" id="eventDescription"></textarea>
+                        <textarea class="form-control" id="eventDescription" name="description"></textarea>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Start Date</label>
-                        <input type="datetime-local" class="form-control" id="eventStart" required>
+                        <input type="datetime-local" class="form-control" id="eventStart" name="start" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">End Date</label>
-                        <input type="datetime-local" class="form-control" id="eventEnd" required>
+                        <input type="datetime-local" class="form-control" id="eventEnd" name="end" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Color</label>
-                        <input type="color" class="form-control" id="eventColor">
+                        <input type="color" class="form-control" id="eventColor" name="color">
                     </div>
                     <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="allDay">
+                        <input type="checkbox" class="form-check-input" id="allDay" name="all_day" value="1">
                         <label class="form-check-label">All Day</label>
                     </div>
-                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-danger" id="deleteEvent">Delete</button>
-                <button type="button" class="btn btn-primary" id="saveEvent">Save</button>
+                <button type="submit" class="btn btn-primary" id="saveEvent">Save</button>
             </div>
         </div>
+
+    </form>
     </div>
 </div>
 @endsection

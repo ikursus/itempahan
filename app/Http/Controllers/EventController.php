@@ -43,14 +43,17 @@ class EventController extends Controller
             'start' => 'required|date',
             'end' => 'required|date|after_or_equal:start',
             'color' => 'nullable|string',
-            'all_day' => 'boolean'
+            'all_day' => 'sometimes|boolean'
         ]);
 
         $data['user_id'] = auth()->id();
 
+        //dd($data);
+
         $event = Event::create($data);
 
-        return response()->json($event);
+        //return response()->json($event);
+        return redirect()->route('calendar.index');
     }
 
     public function update(Request $request, Event $event)
@@ -71,7 +74,8 @@ class EventController extends Controller
 
         $event->update($validated);
 
-        return response()->json($event);
+        // return response()->json($event);
+        return redirect()->route('calendar.index');
     }
 
     public function destroy(Event $event)
@@ -82,6 +86,7 @@ class EventController extends Controller
 
         $event->delete();
 
-        return response()->json(['message' => 'Event deleted']);
+        //return response()->json(['message' => 'Event deleted']);
+        return redirect()->route('calendar.index');
     }
 }
