@@ -31,6 +31,8 @@ class EmailController extends Controller
 
         // Get all attachments
         $attachmentPaths = [];
+
+        
         if ($request->hasFile('attachments'))
         {
             foreach ($request->file('attachments') as $file)

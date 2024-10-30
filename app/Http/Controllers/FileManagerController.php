@@ -12,7 +12,10 @@ class FileManagerController extends Controller
      */
     public function index()
     {
-        return view('file-manager.template-index');
+        // Dapatkan senarai fail upload dan buatkan fungsi pagination
+        $senaraiFiles = FileManager::paginate(5);
+
+        return view('file-manager.template-index', compact('senaraiFiles'));
     }
 
     /**
@@ -34,8 +37,10 @@ class FileManagerController extends Controller
 
         // Simpan di public folder. Data daripada form adalah multiple
         // Dapatkan nama file dan simpan rekod di dalam table file_managers pada column nama_fail
-        if ($request->hasFile('fail_upload')) {
-            foreach ($request->file('fail_upload') as $file) {
+        if ( $request->hasFile('fail_upload') )
+        {
+            foreach ($request->file('fail_upload') as $file)
+            {
                 $file_name = $file->getClientOriginalName();
                 $file->move(public_path('files'), $file_name);
 
@@ -55,9 +60,10 @@ class FileManagerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(FileManager $fileManager)
     {
-        //
+        // Muat Turun Fail upload
+        return response()->download(base_path($fileManager->lokasi_fail));
     }
 
     /**

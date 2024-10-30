@@ -44,61 +44,38 @@
         <div class="card-body border-bottom py-3">
 
 
-        <div class="table-responsive">
-            <table class="table card-table table-vcenter text-nowrap datatable">
-              <thead>
-                <tr>
-                  <th class="w-1"><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"></th>
-                  <th class="w-1">No. <!-- Download SVG icon from http://tabler-icons.io/i/chevron-up -->
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-sm icon-thick" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 15l6 -6l6 6" /></svg>
-                  </th>
-                  <th>Invoice Subject</th>
-                  <th>Client</th>
-                  <th>VAT No.</th>
-                  <th>Created</th>
-                  <th>Status</th>
-                  <th>Price</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
+            <div class="table-responsive">
+                <table class="table card-table table-vcenter text-nowrap datatable">
+                    <thead>
+                        <tr>
+                        <th class="w-1"><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select all invoices"></th>
+                        <th class="w-1">No. <!-- Download SVG icon from http://tabler-icons.io/i/chevron-up -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-sm icon-thick" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M6 15l6 -6l6 6" /></svg>
+                        </th>
+                        <th>Nama Asal Fail</th>
+                        <th>Lokasi Fail</th>
+                        <th>Tindakan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                <tr>
-                  <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"></td>
-                  <td><span class="text-secondary">001401</span></td>
-                  <td><a href="invoice.html" class="text-reset" tabindex="-1">Design Works</a></td>
-                  <td>
-                    <span class="flag flag-xs flag-country-us me-2"></span>
-                    Carlson Limited
-                  </td>
-                  <td>
-                    87956621
-                  </td>
-                  <td>
-                    15 Dec 2017
-                  </td>
-                  <td>
-                    <span class="badge bg-success me-1"></span> Paid
-                  </td>
-                  <td>$887</td>
-                  <td class="text-end">
-                    <span class="dropdown">
-                      <button class="btn dropdown-toggle align-text-top" data-bs-boundary="viewport" data-bs-toggle="dropdown">Actions</button>
-                      <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item" href="#">
-                          Action
-                        </a>
-                        <a class="dropdown-item" href="#">
-                          Another action
-                        </a>
-                      </div>
-                    </span>
-                  </td>
-                </tr>
+                        @foreach ($senaraiFiles as $file)
+                        <tr>
+                            <td><input class="form-check-input m-0 align-middle" type="checkbox" aria-label="Select invoice"></td>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $file->nama_asal_fail }}</td>
+                            <td>{{ $file->lokasi_fail }}</td>
+                            <td class="text-end">
+                                <a href="{{ route('file-manager.show', $file->id) }}" class="btn btn-sm btn-primary">Download</a>
+                            </td>
+                        </tr>
+                        @endforeach
 
-              </tbody>
-            </table>
-          </div>
+                    </tbody>
+                </table>
+            </div>
+
+            {{ $senaraiFiles->links() }}
 
         </div>
         <div class="card-footer d-flex align-items-center">
